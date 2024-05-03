@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/client_side/home.css" />
+    <!-- Project Icon -->
+    <link rel="icon" type="image/png" href="/img/logo.png" />
+    <script type="module" src="/js/client_side/home.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <style>
+      /* CSS to increase icon size */
+      .big-icon {
+        font-size: 30px;
+      }
+
+      .big-font {
+        font-size: 25px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body class="p-5 h-100 w-100">
+    <div id="result_page" class="px-5 row"></div>
+
+    <!-- <div class="counter">
+        <span class="icon" onclick="decreaseCount()"><i class="bi bi-dash-circle-fill big-icon"></i></span>
+        <span id="count" class="big-font px-2">0</span>
+        <span class="icon" onclick="increaseCount()"><i class="bi bi-plus-circle-fill big-icon"></i></span>
+    </div> -->
+    <script>
+      $(document).ready(function () {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get("id");
+        $.ajax({
+          url: "/get_one_product?id=" + id,
+          type: "GET",
+          contentType: "application/json",
+          success: function (response) {
+            const productHtml = `
+                <div class="col-3">
+                    <h1 class="pb-3 ">Product Details</h1>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIoel7Bu4syRn8IWLhUTtN0G25IeyMtCGVfQ&s" alt="productiamge" class="h-100 w-100 "/>
+                </div>
+                <div class="col-8 pt-5 ">
+                    <div class="pb-4">
+                        <h3>Product Name</h3>
+                        <h5>${response.productName}</h5>
+                    </div>
+                    
+                    <div class="pb-4">
+                        <h3>Product Type</h3>
+                        <h5>${response.productType}</h5>
+                    </div>
+                    <div class="pb-4">
+                        <h3>Product Price</h3>
+                        <h5>${response.price}</h5>
+                    </div>
+                    <div class="counter">
+                        <span class="icon"><i class="bi bi-dash-circle-fill big-icon"></i></span>
+                        <span id="count" class="big-font px-2">0</span>
+                        <span class="icon"><i class="bi bi-plus-circle-fill big-icon"></i></span>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg" id="buyBtn">Buy</button>
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="goBack()">Back</button>
+                `;
+            $("#result_page").append(productHtml);
+          },
+          error: function (xhr, status, error) {
+            console.error("Error:", error);
+          },
+        });
+
+        function buyProduct() {
+          alert("test");
+          $.ajax({
+            url: "/order_create",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              productId: id,
+              count: $("#count").text(),
+            }),
+            success: function (response) {
+              alert(response);
+            },
+          });
+        }
+
+        function goBack() {
+          window.location.href = "/user_home";
+        }
+
+        let count = 0;
+        function increaseCount() {
+          alert("here");
+          count++;
+          $("#count").text(count);
+        }
+
+        function decreaseCount() {
+          if (count > 0) {
+            count--;
+            $("#count").text(count);
+          }
+        }
+
+        $(document).on("click", "#buyBtn", buyProduct);
+        $(document).on("click", ".counter .icon:first-child", decreaseCount);
+        $(document).on("click", ".counter .icon:last-child", increaseCount);
+      });
+    </script>
+  </body>
+</html>

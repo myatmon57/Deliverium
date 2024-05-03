@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login</title>
+    <th:block th:insert="~{fragments/cdn-links :: cdnLinks}"></th:block>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card my-5">
+                    <form class="card-body cardbody-color p-lg-5" id="loginForm">
+                        <div class="text-center">
+                            <img src="https://banner2.cleanpng.com/20180426/lwq/kisspng-computer-icons-login-management-user-5ae155f3386149.6695613615247170432309.jpg"
+                                class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="200px"
+                                alt="profile">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="User Name">
+                            <span id="username-error-message" class="error-message"></span>
+                        </div>
+                        
+        
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <span id="password-error-message" class="error-message"></span>
+                        </div>
+                        
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button>
+                        </div>
+                        <div id="emailHelp" class="form-text text-center mb-5 text-dark">NotRegistered? 
+                            <a href="/user/create" class="text-dark fw-bold"> Create an Account</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+#image-preview {
+    display: none;
+    width: 150px; /* Adjust width as needed */
+    height: 150px;
+    border-radius: 100%;
+  }

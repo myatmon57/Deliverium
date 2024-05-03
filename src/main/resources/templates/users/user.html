@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+    <th:block th:insert="~{fragments/cdn-links :: cdnLinks}"></th:block>
+  </head>
+
+  <body>
+    <div th:replace="~{fragments/cdn-links.html :: body}"></div>
+    <div class="p-4 container-fluid">
+      <h1>Users</h1>
+      <div class="container-fluid mt-3">
+        <table class="table table-border table-hover" id="user_table" style="text-align: center">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">User Type</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

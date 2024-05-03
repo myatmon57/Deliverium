@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Create</title>
+    <th:block th:insert="~{fragments/cdn-links :: cdnLinks}"></th:block>
+  </head>
+
+  <body>
+    <div th:replace="~{fragments/cdn-links.html :: body}"></div>
+    <div class="wrapper p-4 container-fluid">
+      <form id="product_create" class="productForm">
+        <div id="wizard" class="w-50">
+          <!-- SECTION 1 -->
+          <h1>Product Create</h1>
+          <div class="row my-3 align-items-center">
+            <div class="col-auto">
+              <img id="image-preview" alt="Image Preview" />
+            </div>
+            <div class="col-auto">
+              <input type="file" id="image-chooser" accept="image/*" />
+            </div>
+          </div>
+
+          <section>
+            <div class="form-row mb-3">
+              <input
+                type="text"
+                name="productName"
+                class="form-control"
+                placeholder="Name"
+              />
+            </div>
+            <div class="form-row mb-3">
+              <input
+                type="text"
+                name="price"
+                class="form-control"
+                placeholder="Price"
+              />
+            </div>
+            <div class="form-row mb-3">
+              <input
+                type="text"
+                name="productType"
+                class="form-control"
+                placeholder="Product Type"
+              />
+            </div>
+            <div class="form-row mb-3 w-25 d-inline">
+              <button type="submit" class="btn btn-primary btn-sm">
+                Create
+              </button>
+              <a href="/product" type="button" class="btn btn-secondary btn-sm">
+                Back
+              </a>
+            </div>
+          </section>
+          <input
+            type="hidden"
+            name="id"
+            class="form-control"
+            th:value="${productId}"
+          />
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function () {
+      let id = "[[${productId}]]";
+      let mode = "[[${mode}]]";
+      if (mode == "edit") {
+        $(".productForm").attr("id", "product_edit");
+        $("h1").text("Product Edit");
+        $('button[type="submit"]').text("Edit");
+      }
+
+      $.ajax({
+        url: "/get_product",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+          productId: id,
+        }),
+        success: function (response) {
+          console.log(response);
+          $('input[name="productName"]').val(response.productName);
+          $('input[name="price"]').val(response.price);
+          $('input[name="productType"]').val(response.productType);
+        },
+      });
+    });
+  </script>
+</html>
